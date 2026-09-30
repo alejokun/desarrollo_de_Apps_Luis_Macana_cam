@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi galería</ion-title>
+    <ion-buttons slot="end">
+      <span class="permission-state" [class.granted]="photoService.cameraPermission() === 'granted'">
+        <ion-icon [name]="photoService.cameraPermission() === 'granted' ? 'shield-checkmark-outline' : 'shield-outline'"></ion-icon>
+        {{ photoService.cameraPermission() === 'granted' ? 'Permiso activo' : 'Permiso al usar cámara' }}
+      </span>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="gallery-page">
+    <section class="capture-panel" aria-label="Añadir una imagen">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">CAPTURA LOCAL</p>
+          <h1>Guarda un momento.</h1>
+        </div>
+        <span class="photo-count">{{ photoService.photos().length }} <small>fotos</small></span>
+      </div>
+
+      <ion-segment [value]="source()" (ionChange)="source.set($any($event.detail.value))" aria-label="Origen de imagen">
+        <ion-segment-button value="camera">
+          <ion-icon name="camera"></ion-icon>
+          <ion-label>Cámara</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="gallery">
+          <ion-icon name="image-outline"></ion-icon>
+          <ion-label>Imagen local</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <div class="capture-actions">
+        <div class="quality-control">
+          <ion-icon [name]="highQuality() ? 'sparkles' : 'flash-outline'"></ion-icon>
+          <div class="quality-copy">
+            <strong>{{ highQuality() ? 'Alta calidad' : 'Tamaño ligero' }}</strong>
+            <span>{{ highQuality() ? 'Hasta 1920 px' : 'Hasta 1000 px' }}</span>
+          </div>
+          <ion-toggle [checked]="highQuality()" (ionChange)="highQuality.set($event.detail.checked)" aria-label="Activar alta calidad"></ion-toggle>
+        </div>
+        <ion-button class="add-button" expand="block" (click)="addPhoto()" [disabled]="busy()">
+          @if (busy()) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            <ion-icon slot="start" [name]="source() === 'camera' ? 'camera' : 'image-outline'"></ion-icon>
+            {{ source() === 'camera' ? 'Abrir cámara' : 'Elegir imagen' }}
+          }
+        </ion-button>
+      </div>
+    </section>
+
+    <section class="library-section" aria-label="Fotos guardadas">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ALMACENAMIENTO DEL DISPOSITIVO</p>
+          <h2>Tus imágenes</h2>
+        </div>
+        <span class="local-badge">SOLO EN ESTE DISPOSITIVO</span>
+      </div>
+
+      @if (photoService.photos().length) {
+        <div class="photo-grid">
+          @for (photo of photoService.photos(); track photo.filepath) {
+            <article class="photo-item">
+              <ion-img [src]="photo.webPath" [alt]="'Foto guardada el ' + (photo.createdAt | date:'mediumDate')"></ion-img>
+              <div class="photo-caption">
+                <span>{{ photo.createdAt | date:'d MMM y, HH:mm' }}</span>
+                <ion-button fill="clear" color="danger" (click)="deletePhoto(photo.filepath)" [attr.aria-label]="'Eliminar foto del ' + (photo.createdAt | date:'short')">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <span class="empty-icon"><ion-icon name="image-outline"></ion-icon></span>
+          <h3>Tu galería empieza aquí</h3>
+          <p>Captura una foto o elige una imagen guardada en el dispositivo.</p>
+        </div>
+      }
+    </section>
+  </main>
+
+  <ion-toast [isOpen]="toastOpen()" [message]="toastMessage()" duration="2800" position="bottom" (didDismiss)="toastOpen.set(false)"></ion-toast>
+</ion-content>

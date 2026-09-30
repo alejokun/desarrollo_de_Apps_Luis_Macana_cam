@@ -1,0 +1,156 @@
+:host {
+	--ink: #172a27;
+	--muted: #64716d;
+	--line: #dce4df;
+	--paper: #f5f7f3;
+	--green: #246b55;
+	--lime: #d6ed91;
+}
+
+ion-toolbar {
+	--background: #fbfcf9;
+	--color: var(--ink);
+	--border-color: var(--line);
+}
+
+ion-title {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.permission-state {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-right: 12px;
+	color: #7a6240;
+	font-size: 11px;
+}
+
+.permission-state ion-icon { font-size: 16px; }
+.permission-state.granted { color: var(--green); }
+
+.gallery-page {
+	width: min(100%, 980px);
+	margin: 0 auto;
+	padding: 22px 18px 44px;
+	color: var(--ink);
+}
+
+.capture-panel {
+	padding: 22px;
+	border: 1px solid #e1e8dd;
+	border-radius: 8px;
+	background: linear-gradient(125deg, #f0f5e9 0%, #f8f8f2 70%, #edf4ee 100%);
+}
+
+.panel-heading, .section-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.eyebrow {
+	margin: 0 0 7px;
+	color: #64806f;
+	font-size: 10px;
+	font-weight: 750;
+}
+
+h1, h2, h3, p { letter-spacing: 0; }
+h1 { margin: 0 0 20px; font-size: 25px; line-height: 1.2; }
+h2 { margin: 0; font-size: 20px; }
+
+.photo-count {
+	color: var(--green);
+	font-size: 24px;
+	font-weight: 750;
+}
+
+.photo-count small { color: var(--muted); font-size: 12px; font-weight: 500; }
+
+ion-segment {
+	--background: #e4ebe2;
+	width: 100%;
+	max-width: 390px;
+	margin-bottom: 16px;
+	border-radius: 6px;
+}
+
+ion-segment-button {
+	--color: #596862;
+	--color-checked: #fff;
+	--background-checked: var(--green);
+	--indicator-color: var(--green);
+	min-height: 44px;
+	font-size: 13px;
+	text-transform: none;
+}
+
+ion-segment-button ion-icon { margin-right: 6px; }
+
+.capture-actions {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(190px, 0.8fr);
+	align-items: center;
+	gap: 18px;
+}
+
+.quality-control { display: flex; align-items: center; gap: 11px; }
+.quality-control > ion-icon { color: #688247; font-size: 21px; }
+.quality-copy { display: grid; gap: 3px; flex: 1; }
+.quality-copy strong { font-size: 13px; }
+.quality-copy span { color: var(--muted); font-size: 11px; }
+.quality-control ion-toggle { --track-background: #ccd4cb; --track-background-checked: #9abe70; --handle-background-checked: var(--green); }
+
+.add-button {
+	--background: var(--green);
+	--background-activated: #1a5341;
+	--border-radius: 6px;
+	--box-shadow: none;
+	height: 48px;
+	font-weight: 650;
+}
+
+.library-section { padding-top: 27px; }
+.section-heading { margin-bottom: 16px; }
+.local-badge { color: #577366; font-size: 9px; font-weight: 750; }
+
+.photo-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	gap: 12px;
+}
+
+.photo-item { overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+.photo-item ion-img { aspect-ratio: 4 / 3; --background: #e8ede8; object-fit: cover; }
+.photo-caption { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 2px 8px 2px 10px; }
+.photo-caption span { overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.photo-caption ion-button { --padding-start: 7px; --padding-end: 7px; min-height: 36px; }
+
+.empty-state {
+	display: grid;
+	justify-items: center;
+	padding: 34px 20px;
+	border: 1px dashed #cbd7ce;
+	border-radius: 7px;
+	background: #fafbf8;
+	text-align: center;
+}
+
+.empty-icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: var(--lime); color: #375b39; }
+.empty-icon ion-icon { font-size: 22px; }
+.empty-state h3 { margin: 13px 0 5px; font-size: 15px; }
+.empty-state p { max-width: 320px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+@media (max-width: 560px) {
+	.gallery-page { padding: 14px 13px 32px; }
+	.capture-panel { padding: 17px 15px; }
+	h1 { font-size: 22px; }
+	.capture-actions { grid-template-columns: 1fr; gap: 15px; }
+	.section-heading { align-items: flex-end; }
+	.local-badge { max-width: 106px; text-align: right; line-height: 1.4; }
+	.photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+	.permission-state { gap: 4px; margin-right: 6px; font-size: 10px; }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "cam",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
